@@ -1,9 +1,9 @@
 export class Terrain {
 	static #tiles = {
-		'~': { '~': 3, '.': 2, 'p': 0, 'M': 0 },
-		'.': { '~': 5, '.': 3, 'p': 3, 'M': 0 },
-		'p': { '~': 0, '.': 1, 'p': 5, 'M': 1 },
-		'M': { '~': 0, '.': 0, 'p': 1, 'M': 1 },
+		'~': { '~': 4, '.': 2, 'p': 0, 'M': 0 },
+		'.': { '~': 10, '.': 2, 'p': 5, 'M': 0 },
+		'p': { '~': 0, '.': 1, 'p': 10, 'M': 2 },
+		'M': { '~': 0, '.': 0, 'p': 1, 'M': 2 },
 	};
 	static #adjacent = [[-1, 0], [1, 0], [0, -1], [0, 1]];
 	#text: string = '';
@@ -63,7 +63,8 @@ export class Terrain {
 		}
 
 		this.#buffer[currCoord.x + currCoord.y * this.#x] = newTile;
-		for (const [dx, dy] of Terrain.#adjacent) {
+		const rndAdjacent = Terrain.#adjacent.sort(() => Math.random() - 0.5);
+		for (const [dx, dy] of rndAdjacent) {
 			if (currCoord.x + dx < 0 || currCoord.x + dx >= this.#x ||
 				currCoord.y + dy < 0 || currCoord.y + dy >= this.#y) continue;
 			if (this.#buffer[currCoord.x + dx + (currCoord.y + dy) * this.#x] !== '-') continue;
